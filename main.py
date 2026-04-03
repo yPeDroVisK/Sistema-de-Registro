@@ -1,4 +1,32 @@
 import tkinter as tk
+from tkinter import messagebox
+import re
+import sqlite3
+
+# Regex - Email-Usuário (Definidos antes para as funções usarem)
+__EMAIL_RE = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
+__USER_RE = re.compile(r"^[a-zA-ZÀ-ÿ\s]{3,50}$")
+
+def registrar_usuario():
+    nome = entry_nome.get()
+    email = entry_email.get()
+
+    # Validação primeiro
+    if __EMAIL_RE.match(email) and __USER_RE.match(nome):
+        try:
+            messagebox.showinfo("Sucesso", "Email e Usuário cadastrados!")
+            
+            # Limpa os campos após sucesso
+            entry_nome.delete(0, tk.END)
+            entry_email.delete(0, tk.END)
+            
+        except Exception as e:
+            messagebox.showerror("Erro ao resgistrar", f"Erro: {e}")
+    else:
+        # Se os dados não passarem no Regex
+        messagebox.showerror("Erro", "Nome (3-50 letras) ou E-mail inválido!")
+        entry_email.delete(0, tk.END)
+        entry_nome.delete(0, tk.END)
 
 Janela = tk.Tk()
 Janela.title("Sistema de Registro")
