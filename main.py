@@ -28,6 +28,19 @@ def registrar_usuario():
         entry_email.delete(0, tk.END)
         entry_nome.delete(0, tk.END)
 
+def banco_dados():
+    conn = sqlite3.connect("sistema_usuarios.db")
+    cursor = conn.cursor()
+    cursor.execute('''CREATE TABLE IF NOT EXISTS usuarios (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    nome TEXT NOT NULL,
+                    email TEXT NOT NULL )''')
+    conn.commit()
+    conn.close()
+
+# Inicializa o DB
+banco_dados()
+
 Janela = tk.Tk()
 Janela.title("Sistema de Registro")
 Janela.geometry("400x350")
